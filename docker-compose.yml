@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:14.5
+    restart: always
+    ports: 
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    secrets:
+      - source: postgres_user
+        target: postgres_user.txt
+      - source: postgres_password
+        target: postgres_password.txt
+      - source: postgres_db
+        target: postgres_db.txt
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/postgres_user.txt
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password.txt
+      POSTGRES_DB_FILE: /run/secrets/postgres_db.txt
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$(cat /run/secrets/postgres_user.txt) -d $$(cat /run/secrets/postgres_db.txt)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+
+volumes:
+  pgdata:
+secrets:
+  postgres_user:
+    file: .secrets/postgres_user.txt
+  postgres_password:
+    file: .secrets/postgres_password.txt
+  postgres_db:
+    file: .secrets/postgres_db.txt
