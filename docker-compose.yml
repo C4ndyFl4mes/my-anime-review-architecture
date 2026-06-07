@@ -22,11 +22,36 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
+  api:
+    image: caandyflames/my-anime-review-api:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    secrets:
+      - source: db_connection_string
+        target: db_connection_string.txt
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+  caddy:
+    image: caddy:alpine
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_certs:/config
 
 
 volumes:
   pgdata:
+  caddy_data:
+  caddy_certs:
 secrets:
   postgres_user:
     file: .secrets/postgres_user.txt
@@ -34,3 +59,5 @@ secrets:
     file: .secrets/postgres_password.txt
   postgres_db:
     file: .secrets/postgres_db.txt
+  db_connection_string:
+    file: .secrets/db_connection_string.txt
