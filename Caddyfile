@@ -1,3 +1,9 @@
 localhost {
-    reverse_proxy api:8080
+    handle_path /api/* {
+        reverse_proxy api:8080
+    }
+
+    handle  {
+        reverse_proxy react:8080
+    }
 }

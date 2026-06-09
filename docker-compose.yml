@@ -34,11 +34,17 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: http://+:8080
+  react:
+    image: caandyflames/my-anime-review-application:latest
+    restart: unless-stopped
+    depends_on:
+      - api
   caddy:
     image: caddy:alpine
     restart: unless-stopped
     depends_on:
       - api
+      - react
     ports:
       - "8080:80"
       - "8443:443"
@@ -46,8 +52,6 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_certs:/config
-
-
 volumes:
   pgdata:
   caddy_data:
