@@ -39,6 +39,21 @@ services:
     restart: unless-stopped
     depends_on:
       - api
+    secrets:
+      - source: db_connection_string
+        target: db_connection_string.txt
+      - source: audience
+        target: audience.txt
+      - source: issuer
+        target: issuer.txt
+      - source: secret_key
+        target: secret_key.txt
+      - source: admin_email
+        target: admin_email.txt
+      - source: admin_name
+        target: admin_name.txt
+      - source: admin_password
+        target: admin_password.txt
   caddy:
     image: caddy:alpine
     restart: unless-stopped
@@ -65,3 +80,15 @@ secrets:
     file: .secrets/postgres_db.txt
   db_connection_string:
     file: .secrets/db_connection_string.txt
+  audience:
+    file: .secrets/audience.txt
+  issuer:
+    file: .secrets/issuer.txt
+  secret_key:
+    file: .secrets/secret_key.txt
+  admin_email:
+    file: .secrets/admin_email.txt
+  admin_name:
+    file: .secrets/admin_name.txt
+  admin_password:
+    file: .secrets/admin_password.txt
