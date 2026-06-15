@@ -1,1 +1,1 @@
-Host=localhost;Username=MyAnimeReviewPlaceholder;Password=PasswordPlaceholder;Database=MyAnimeReviewPlaceholder
+Host=db;Port=5432;Username=MyAnimeReviewPlaceholder;Password=PasswordPlaceholder;Database=MyAnimeReviewPlaceholder

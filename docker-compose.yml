@@ -25,20 +25,10 @@ services:
   api:
     image: caandyflames/my-anime-review-api:latest
     restart: unless-stopped
+    pull_policy: always
     depends_on:
       db:
         condition: service_healthy
-    secrets:
-      - source: db_connection_string
-        target: db_connection_string.txt
-    environment:
-      ASPNETCORE_ENVIRONMENT: Production
-      ASPNETCORE_URLS: http://+:8080
-  react:
-    image: caandyflames/my-anime-review-application:latest
-    restart: unless-stopped
-    depends_on:
-      - api
     secrets:
       - source: db_connection_string
         target: db_connection_string.txt
@@ -54,6 +44,15 @@ services:
         target: admin_username.txt
       - source: admin_password
         target: admin_password.txt
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+  react:
+    image: caandyflames/my-anime-review-application:latest
+    restart: unless-stopped
+    pull_policy: always
+    depends_on:
+      - api
   caddy:
     image: caddy:alpine
     restart: unless-stopped
