@@ -50,8 +50,8 @@ services:
         target: secret_key.txt
       - source: admin_email
         target: admin_email.txt
-      - source: admin_name
-        target: admin_name.txt
+      - source: admin_username
+        target: admin_username.txt
       - source: admin_password
         target: admin_password.txt
   caddy:
@@ -88,7 +88,7 @@ secrets:
     file: .secrets/secret_key.txt
   admin_email:
     file: .secrets/admin_email.txt
-  admin_name:
-    file: .secrets/admin_name.txt
+  admin_username:
+    file: .secrets/admin_username.txt
   admin_password:
     file: .secrets/admin_password.txt
