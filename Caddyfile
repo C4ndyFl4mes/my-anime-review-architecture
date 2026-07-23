@@ -7,3 +7,14 @@ myanimereview.se, www.myanimereview.se {
         reverse_proxy react:8080
     }
 }
+
+localhost {
+    tls internal
+    handle_path /api/* {
+        reverse_proxy api:8080
+    }
+    
+    handle  {
+        reverse_proxy react:8080
+    }
+}
