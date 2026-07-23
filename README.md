@@ -1,6 +1,5 @@
 # My Anime Review Architecture
-
-This repo will be the one to compose the Docker environment with a PostgreSQL DBMS, WebAPI (ASP.NET), React frontend, and Caddy.
+This repo composes the entire application inside a Docker environment with four containers: PostgreSQL DBMS, WebAPI (ASP.NET) ([to repo](https://github.com/C4ndyFl4mes/my-anime-review-api)), React frontend ([to repo](https://github.com/C4ndyFl4mes/my-anime-review-application)), and Caddy as proxy. All the secrets for the application lies under the .secrets/ folder.
 
 ## Local Deployment Guide (Windows)
 Prerequisite for windows: Docker Desktop.
